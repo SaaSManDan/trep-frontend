@@ -15,17 +15,6 @@ export default function FirstScreen({navigation}) {
        }
      });
 
-  //checkUserSignedIn();
-  /*if(AsyncStorage.getItem("user_token") != null){
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'UserHomepage' }],
-    });
-    console.log("User is signed in.")
-  } else {
-    console.log("User is not signed in.")
-  }*/
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ alignItems: 'center', top: 150}}>
