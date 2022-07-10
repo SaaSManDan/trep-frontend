@@ -4,9 +4,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TripPreview from './TripPreview';
+import { getAllThisUsersPlans } from '../services/getAllThisUsersPlans';
+import { getLocallyStoredUserData } from '../services/getUserLocallyStoredData';
 
 export default function UserHomepage() {
-  const [userToken, setUserToken] = useState("");
   const [username, setUsername] = useState("");
   const [listofPlans, setListOfPlans] = useState([]);
   const navigation = useNavigation();
@@ -20,53 +21,39 @@ export default function UserHomepage() {
     });
   }
 
-  AsyncStorage.multiGet(['user_token', 'username']).then(items => {
-    console.log("Token from multiGet function: " + items[0][0]);
-    console.log("Username from multiGet function: " + items[0][0]);
-    setUserToken(items[0][1]);
-    setUsername(items[1][1]);
-  });
-
   useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-      headers: { 'Authorization': 'Basic ' + userToken, 'Content-Type': 'application/json' }
-    };
-
-    fetch("https://trep-backend-mf5ry.ondigitalocean.app/api/show-all-plans", requestOptions)
-      .then((response) => response.json())
-      .then((results) => {
-        if (results.length > 0) {
-          console.log(results.length + " travel plans were found.")
-          console.log(results)
-          setListOfPlans(results);
-          //console.log("V Below is the second obj from the 'ListOfPlans' hook V")
-          //console.log(listofPlans[1]["plan_id"])
-        } else {
-          console.log("No travel plans were found.")
-        }
-      })
-      .catch((error) => {
-        console.error(error);
+    let mounted = true;
+    console.log("useEffect executed")
+    getLocallyStoredUserData().then((locallyStoredUserData) => {
+      setUsername(locallyStoredUserData[1][1]); //setUsername
+      getAllThisUsersPlans(locallyStoredUserData[0][1]) //use user's token to fetch their plans
+        .then(thisUsersPlans => {
+          if(mounted){
+            setListOfPlans(thisUsersPlans)
+          }
+        })
+    }).catch((error) => {
+      console.log(error)
     });
+    return () => mounted = false
   }, [])
 
-  /*useEffect(() => {
-    getPlans();
-  }, [])*/
 
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.greetingText}>Hello, { username } 👋 .</Text>
+      <Text style={{ fontWeight: 'bold', fontSize: '10', marginLeft: 20, color: '#36AFF6', fontSize: 25, marginBottom: 20 }}>Upcoming Plans</Text>
       <View style={{ height: 50, width: '100%', alignItems: 'center'}}>
         {listofPlans.map((planObj)=>(
           <TripPreview key={planObj.plan_id} nameOfPlans={planObj.name_of_plan} tripStartDate={planObj.trip_start_date} tripEndDate={planObj.trip_end_date} />
         ))}
       </View>
-      <Pressable onPress={executeLogout}>
-        <Text>Log Out</Text>
-      </Pressable>
+      <View>
+        <Pressable onPress={executeLogout}>
+          <Text>Log Out</Text>
+        </Pressable>
+      </View>
     </SafeAreaView>
   )
 }
@@ -79,6 +66,7 @@ const styles = StyleSheet.create({
   greetingText: {
     fontSize: 30,
     fontWeight: 'bold',
-    marginLeft: 20
+    marginLeft: 20,
+    marginBottom: 12
   }
 });

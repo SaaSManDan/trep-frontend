@@ -18,7 +18,7 @@ export default function TripPreview(props) {
         </View>
         <View style={styles.rightBox}>
           <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{props.nameOfPlans}</Text>
-          <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{convertDate(props.tripStartDate)} - {convertDate(props.tripEndDate)}</Text>
+          <Text style={{ fontWeight: 'bold', fontSize: 12 }}>{convertDate(props.tripStartDate)} - {convertDate(props.tripEndDate)}</Text>
         </View>
     </View>
   )
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   leftBox: {
     flex: 3.5,
-    backgroundColor: "red",
+    backgroundColor: "white",
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -45,11 +45,11 @@ const styles = StyleSheet.create({
   },
   rightBox: {
     flex: 6.5,
-    backgroundColor: "darkorange",
+    backgroundColor: "white",
     height: '100%',
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
-    paddingLeft: 15,
+    paddingLeft: 10,
     paddingTop: 8
   }
 });
