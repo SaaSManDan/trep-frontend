@@ -30,7 +30,7 @@ export default function LoginScreen() {
 
           navigation.reset({
             index: 0,
-            routes: [{ name: 'UserHomepage' }],
+            routes: [{ name: 'Home' }],
           });
         } else {
           console.log("Incorrect credentials.")
