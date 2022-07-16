@@ -58,7 +58,7 @@ export default function UserHomepage() {
              showsHorizontalScrollIndicator={false}
              renderItem={({item}) => {
                 return (
-                  <TripPreview key={item.plan_id} nameOfPlans={item.name_of_plan} tripStartDate={item.trip_start_date} tripEndDate={item.trip_end_date} />
+                  <TripPreview key={item.plan_id} nameOfPlans={item.name_of_plan} tripStartDate={item.trip_start_date} tripEndDate={item.trip_end_date} location={item.location}/>
                 )
              }}
              keyExtractor={(item) => item.plan_id}

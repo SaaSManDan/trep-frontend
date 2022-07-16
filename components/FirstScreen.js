@@ -8,7 +8,7 @@ export default function FirstScreen({navigation}) {
        if (item) {
          navigation.reset({
            index: 0,
-           routes: [{ name: 'UserHomepage' }],
+           routes: [{ name: 'Home' }],
          });
        } else {
          console.log("User is not signed in.")

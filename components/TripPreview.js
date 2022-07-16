@@ -14,12 +14,23 @@ export default function TripPreview(props) {
   return (
     <View style={styles.container}>
         <View style={styles.leftBox}>
-          <Image style={{ height: '90%', width: '90%', borderRadius: 10 }} source={{uri: "https://placehold.jp/150x150.png"}} />
+          <View style={{ height: '90%', width: '90%', borderRadius: 10, backgroundColor: '#cbc7c6' }}></View>
+          {/* <Image style={{ height: '90%', width: '90%', borderRadius: 10 }} source={{uri: "https://placehold.jp/150x150.png"}} /> */}
         </View>
         <View style={styles.rightBox}>
           <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{props.nameOfPlans}</Text>
           <Text style={{ fontWeight: 'bold', fontSize: 12 }}>{convertDate(props.tripStartDate)} - {convertDate(props.tripEndDate)}</Text>
-        </View>
+          <View style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 1 }}>
+            <View style={{flex: 2}}></View>
+            <View style={{flex: 2, flexDirection: 'row', justifyContent: 'flex-start' }}>
+              <Image
+                style={{ width: 22, height: 22, marginRight: 5 }}
+                source={require('.././assets/flat-create-new-plan.png')}
+              />
+            <Text style={{fontWeight: '600', fontSize: 12, marginTop: 1}}>{props.location}</Text>
+            </View>
+          </View>
+      </View>
     </View>
   )
 }
