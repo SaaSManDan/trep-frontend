@@ -13,6 +13,9 @@ export default function FirstScreen({navigation}) {
        } else {
          console.log("User is not signed in.")
        }
+     })
+     .catch((err) => {
+       console.log("Unable to execute AsyncStorage GetItem function on first screen")
      });
 
   return (
@@ -31,7 +34,7 @@ export default function FirstScreen({navigation}) {
         </Pressable>
       </View>
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
