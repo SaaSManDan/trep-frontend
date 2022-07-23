@@ -18,7 +18,7 @@ export default function LoginScreen() {
       body: JSON.stringify({ email: email, password: password })
     };
 
-    return fetch("http://localhost:8080/api/login/", requestOptions)
+    return fetch("https://trep-backend-mf5ry.ondigitalocean.app/api/login/", requestOptions)
       .then((response) => response.json())
       .then((json) => {
         if (json.success == true) {

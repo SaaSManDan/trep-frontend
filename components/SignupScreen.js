@@ -18,7 +18,7 @@ export default function SignupScreen() {
       body: JSON.stringify({ email: email, first_name: firstName, last_name: lastName, password: password, reconfirmPassword: reconfirmPassword })
     };
 
-    return fetch("http://localhost:8080/api/register/", requestOptions)
+    return fetch("https://trep-backend-mf5ry.ondigitalocean.app/api/register/", requestOptions)
       .then((response) => response.json())
       .then((json) => {
         if (json.success == true) {
