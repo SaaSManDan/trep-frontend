@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export async function getLocallyStoredUserData (){
   console.log("getUserData function executed")
   try {
-    const locallyStoredUserData = await AsyncStorage.multiGet(['user_token', 'username'])
+    const locallyStoredUserData = await AsyncStorage.multiGet(['user_token', 'first_name'])
     if(locallyStoredUserData !== null){
       //console.log("Token from multiGet function: " + values[0][1]);
       //console.log("Username from multiGet function: " + values[1][1]);

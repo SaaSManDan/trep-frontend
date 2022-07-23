@@ -8,24 +8,15 @@ import { getAllThisUsersPlans } from '../services/getAllThisUsersPlans';
 import { getLocallyStoredUserData } from '../services/getUserLocallyStoredData';
 
 export default function UserHomepage() {
-  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [listofPlans, setListOfPlans] = useState([]);
   const navigation = useNavigation();
-
-  const executeLogout = () => {
-    AsyncStorage.removeItem("user_token");
-    AsyncStorage.removeItem("username");
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'FirstScreen' }],
-    });
-  };
 
   useEffect(() => {
     let mounted = true;
     console.log("useEffect executed")
     getLocallyStoredUserData().then((locallyStoredUserData) => {
-      setUsername(locallyStoredUserData[1][1]); //setUsername
+      setFirstName(locallyStoredUserData[1][1]); //setUsername
       getAllThisUsersPlans(locallyStoredUserData[0][1]) //use user's token to fetch their plans
         .then(thisUsersPlans => {
           if(mounted){
@@ -42,7 +33,7 @@ export default function UserHomepage() {
   const flatListHeader = () => {
     return (
       <React.Fragment>
-        <Text style={styles.greetingText}>Hello, { username } 👋 .</Text>
+        <Text style={styles.greetingText}>Hello, { firstName } 👋 .</Text>
         <Text style={{ fontWeight: 'bold', fontSize: '10', marginLeft: 10, color: '#36AFF6', fontSize: 25, marginBottom: 20 }}>Upcoming Plans</Text>
       </React.Fragment>
     )

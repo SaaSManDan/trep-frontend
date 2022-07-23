@@ -6,8 +6,8 @@ import { StackActions, NavigationActions } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen() {
-  const [username, setUsername] = useState("daniel@gmail.com");
-  const [password, setPassword] = useState("DCr102404$");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [userTokenValue, setUserTokenValue] = useState("");
   const navigation = useNavigation();
 
@@ -15,18 +15,20 @@ export default function LoginScreen() {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ usernameOrEmail: username, password: password })
+      body: JSON.stringify({ email: email, password: password })
     };
 
-    return fetch("https://trep-backend-mf5ry.ondigitalocean.app/api/login/", requestOptions)
+    return fetch("http://localhost:8080/api/login/", requestOptions)
       .then((response) => response.json())
       .then((json) => {
         if (json.success == true) {
           console.log("Successfully logged in. ");
-          console.log("Your username is: " + json.username)
+          console.log("Your first name is: " + json.firstName)
           //navigation.navigate('UserHomepage')
           AsyncStorage.setItem('user_token', json.token);
-          AsyncStorage.setItem('username', json.username);
+          console.log("Setting user's first name into storage: " + json.firstName)
+          AsyncStorage.setItem('first_name', json.firstName);
+
 
           navigation.reset({
             index: 0,
@@ -42,14 +44,14 @@ export default function LoginScreen() {
   }
 
   const checkInputs = () => {
-    return console.log("Username: " + username + " Password: " + password)
+    return console.log("Email: " + email + " Password: " + password)
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={{ paddingLeft: 20, color: '#36AFF6', fontSize: 30, fontWeight: 'bold', marginTop: 35, marginBottom: 10 }}>Welcome Back!</Text>
       <View style={styles.inputsContainer}>
-        <TextInput style={styles.textinputs} placeholder="Username or Email" value={username} onChangeText={username => setUsername(username)} />
+        <TextInput style={styles.textinputs} placeholder="Email" value={email} onChangeText={email => setEmail(email)} />
         <TextInput style={styles.textinputs} placeholder="Password" value={password} onChangeText={password => setPassword(password)} secureTextEntry={true} />
         <Pressable style={ styles.loginBtn } onPress={executeLoginCheck}>
           <Text style={ styles.buttonText }>Log In</Text>
